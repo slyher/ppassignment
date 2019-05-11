@@ -17,7 +17,7 @@ class CreateDistrictsTable extends Migration
 		$table->bigIncrements('id');
 		$table->string('name', 150);
 		$table->string('town_name',200);
-		$table->unsignedBigInteger(;'population');
+		$table->unsignedBigInteger('population');
 		$table->unsignedDecimal('surface');
 		$table->unique(['name','town_name']);
 	    $table->timestamps();
