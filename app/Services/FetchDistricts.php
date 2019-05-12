@@ -30,6 +30,12 @@ abstract class FetchDistricts
     protected $townName;
 
     /**
+     * @return string
+     */
+    public abstract function getTownName(): string;
+
+
+    /**
      * FetchDistricts constructor.
      * @param Client $client
      * @param District $model
@@ -45,8 +51,9 @@ abstract class FetchDistricts
     /**
      * @throws TownNameNotPrivided
      */
-    public function saveAllDistrictsData()
+    public function saveAllDistrictsData(): void
     {
+        $this->townName = $this->townName();
         if (!empty($this->townName)) {
             $this->model->where('town_name', $this->townName)->delete();
         } else {
@@ -57,18 +64,20 @@ abstract class FetchDistricts
             $districtUrl = $this->generateDistrictUrl($districtsId);
             $districtPage = $this->getDistrictPage($districtUrl);
             $districtData = $this->getDistrictdata($districtPage);//parse
-            $this->model->fill($districtData);
-            $this->model->save();
+            if (!empty($districtData)) {
+                $this->model->fill($districtData);
+                $this->model->save();
+            }
         }
     }
 
-    protected abstract function getDistrictIds();
+    protected abstract function getDistrictIds(): array;
 
-    protected abstract function generateDistrictUrl($districtsId);
+    protected abstract function generateDistrictUrl($districtsId): string;
 
-    protected abstract function getDistrictPage($districtUrl);
+    protected abstract function getDistrictPage($districtUrl): string;
 
-    protected abstract function getDistrictdata($districtPage);
+    protected abstract function getDistrictdata($districtPage): array;
 
 
 }

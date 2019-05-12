@@ -4,14 +4,14 @@
 namespace App\Services;
 
 
-class FetchDistrictsGdansk extends FetchDistricts
+class FetchDistrictsCracow extends FetchDistricts
 {
     /**
      * @return string
      */
     public function getTownName(): string
     {
-        return env('GDANSK_TOWN_NAME');
+        return env('CRACOW_TOWN_NAME');
     }
 
 
