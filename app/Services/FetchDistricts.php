@@ -53,15 +53,15 @@ abstract class FetchDistricts
      */
     public function saveAllDistrictsData(): void
     {
-        $this->townName = $this->townName();
+        $this->townName = $this->getTownName();
         if (!empty($this->townName)) {
-            $this->model->where('town_name', $this->townName)->delete();
+            $this->model->deleteAllFromTown($this->townName);
         } else {
             throw new TownNameNotPrivided();
         }
         $districtsIds = $this->getDistrictIds();
-        foreach ($districtsIds as $districtsId) {
-            $districtUrl = $this->generateDistrictUrl($districtsId);
+        foreach ($districtsIds as $districtId) {
+            $districtUrl = $this->generateDistrictUrl($districtId);
             $districtPage = $this->getDistrictPage($districtUrl);
             $districtData = $this->getDistrictdata($districtPage);//parse
             if (!empty($districtData)) {
@@ -73,7 +73,10 @@ abstract class FetchDistricts
 
     protected abstract function getDistrictIds(): array;
 
-    protected abstract function generateDistrictUrl($districtsId): string;
+    protected function generateDistrictUrl($districtId): string
+    {
+        return str_replace('%id%', $districtId, $this->url);
+    }
 
     protected abstract function getDistrictPage($districtUrl): string;
 

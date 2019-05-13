@@ -18,13 +18,7 @@ class FetchDistrictsGdansk extends FetchDistricts
     protected function getDistrictIds(): array
     {
         // TODO: Implement getDistrictIds() method.
-        return [];
-    }
-
-    protected function generateDistrictUrl($districtsId): string
-    {
-        // TODO: Implement generateDistrictUrl() method.
-        return '';
+        return ['1'];
     }
 
     protected function getDistrictPage($districtUrl): string
