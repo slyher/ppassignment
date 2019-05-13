@@ -62,11 +62,11 @@ abstract class FetchDistricts
         $districtsIds = $this->getDistrictIds();
         foreach ($districtsIds as $districtId) {
             $districtUrl = $this->generateDistrictUrl($districtId);
-            $districtPage = $this->getDistrictPage($districtUrl);
-            $districtData = $this->getDistrictdata($districtPage);//parse
+            $districtData = $this->getDistrictdata($districtUrl);//parse
             if (!empty($districtData)) {
-                $this->model->fill($districtData);
-                $this->model->save();
+                $model = new District();
+                $model->fill($districtData);
+                $model->save();
             }
         }
     }
@@ -78,9 +78,7 @@ abstract class FetchDistricts
         return str_replace('%id%', $districtId, $this->url);
     }
 
-    protected abstract function getDistrictPage($districtUrl): string;
-
-    protected abstract function getDistrictdata($districtPage): array;
+    protected abstract function getDistrictdata($districtUrl): array;
 
 
 }

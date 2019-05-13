@@ -21,13 +21,7 @@ class FetchDistrictsCracow extends FetchDistricts
         return [];
     }
 
-    protected function getDistrictPage($districtUrl): string
-    {
-        // TODO: Implement getDistrictPage() method.
-        return '';
-    }
-
-    protected function getDistrictdata($districtPage): array
+    protected function getDistrictdata($districtUrl): array
     {
         // TODO: Implement getDistrictdata() method.
         return [];

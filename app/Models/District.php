@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class District extends Model
 {
+    protected $fillable = ['town_name', 'name', 'population', 'surface',];
+    public $timestamps = false;
+
     /**
      * deletes all district from town
      * @param $townName

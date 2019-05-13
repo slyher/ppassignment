@@ -20,7 +20,6 @@ class CreateDistrictsTable extends Migration
 		$table->unsignedBigInteger('population');
 		$table->unsignedDecimal('surface');
 		$table->unique(['name','town_name']);
-	    $table->timestamps();
         });
     }
 
