@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateDistrictsTable extends Migration
 {
@@ -18,7 +18,7 @@ class CreateDistrictsTable extends Migration
 		$table->string('name', 150);
 		$table->string('town_name',200);
 		$table->unsignedBigInteger('population');
-		$table->unsignedDecimal('surface');
+		$table->unsignedDecimal('surface', 10, 4);
 		$table->unique(['name','town_name']);
         });
     }
