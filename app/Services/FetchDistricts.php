@@ -64,7 +64,7 @@ abstract class FetchDistricts
             $districtUrl = $this->generateDistrictUrl($districtId);
             $districtData = $this->getDistrictdata($districtUrl);//parse
             if (!empty($districtData)) {
-                $model = new District();
+                $model = new District();//$model = new ${get_class($this->model)}();
                 $model->fill($districtData);
                 $model->save();
             }
