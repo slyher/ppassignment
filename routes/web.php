@@ -12,7 +12,8 @@
 */
 
 Route::get('/','DistrictController@list');
-Route::post('/new','DistrictController@create');
+Route::get('/new','DistrictController@create');
+Route::post('/store','DistrictController@store');
 Route::get('/{id}','DistrictController@edit');
 Route::post('/update/{id}','DistrictController@update');
 Route::get('/delete/{id}','DistrictController@delete');

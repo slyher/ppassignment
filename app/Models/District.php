@@ -27,9 +27,17 @@ class District extends Model
         return $this;
     }
 
-    public function getAll($sort, $sortDir): array
+    public function getAllFiltered($sort, $direction, $search): array
     {
-        return $this->orderBy($sort, $sortDir)->get()->toArray();
+        $returnDara = $this->orderBy($sort, $direction);
+        if (!empty($search)) {
+            $returnDara = $returnDara->
+                where('name', 'LIKE', "%".$search."%")->
+            orWhere('town_name', 'LIKE', "%".$search."%")->
+            orWhere('population', 'LIKE', "%".$search."%")->
+            orWhere('surface', 'LIKE', "%".$search."%");
+        }
+        return $returnDara->get()->toArray();
     }
 
     public function remove($id)

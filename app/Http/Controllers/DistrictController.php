@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\View;
 class DistrictController extends Controller
 {
     private $model;
+    /**
+     * @var array
+     */
+    private $rules;
 
     /**
      * DistrictController constructor.
@@ -19,32 +23,39 @@ class DistrictController extends Controller
     public function __construct(District $model)
     {
         $this->model = $model;
+        $this->rules = array(
+            'name' => 'required',
+            'town_name' => 'required',
+            'population' => 'required|numeric',
+            'surface' => 'required',
+        );
     }
 
     public function list(Request $request)
     {
         $sort = $request->get('sort', 'name');
         $direction = $request->get('direction', 'asc');
-        $allDistricts = $this->model->getAll($sort, $direction);
-        return View::make("list")->with(array('districts' => $allDistricts, 'sort' => $sort, 'direction' => $direction));
+        $search = $request->get('search');
+        $allDistricts = $this->model->getAllFiltered($sort, $direction, $search);
+        return View::make("district.list")->with(
+            [
+                'districts' => $allDistricts,
+                'sort' => $sort,
+                'direction' => $direction,
+                'search' => $search,
+            ]);
     }
 
     public function edit($id)
     {
-        $district = $this->model->where('id',$id)->get()->first();//@todo move to model
-        return View::make('edit')
+        $district = $this->model->where('id', $id)->get()->first();//@todo move to model
+        return View::make('district.edit')
             ->with('district', $district);
     }
 
     public function update($id)
     {
-        $rules = array(
-            'name'       => 'required',
-            'town_name'  => 'required',
-            'population' => 'required|numeric',
-            'surface'    => 'required',
-        );
-        $validator = Validator::make(Input::all(), $rules);
+        $validator = Validator::make(Input::all(), $this->rules);
 
         // process the login
         if ($validator->fails()) {
@@ -54,9 +65,21 @@ class DistrictController extends Controller
         return redirect('/')->with('msg', 'District updated');
     }
 
-    public function create(Request $request)
+    public function create()
     {
+        return View::make('district.new');
+    }
 
+    public function store(Request $request)
+    {
+        $validator = Validator::make(Input::all(), $this->rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return redirect('/')->with('msg', 'District Failed to update');
+        }
+        $this->model->fill(Input::all())->save();//@todo move to model
+        return redirect('/')->with('msg', 'District Created');
     }
 
     public function delete($id)
