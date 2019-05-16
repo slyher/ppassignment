@@ -2,7 +2,7 @@
 ### install
 $ composer install
 
-$ vim ./config/database.php
+$ vim ./.env
 
 Or use Your favorite text editor.
 
